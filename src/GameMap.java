@@ -88,10 +88,6 @@ public class GameMap {
 
 
 
-    //
-
-    //THE NEXT 5 METHODS ARE PART OF THE ALLOCATESHIPS METHOD:
-
     // Method to check if still has ship to allocate
     private boolean isShipAvailable(int[] shipAvailable) {
         int i, isAvailable = 0;
@@ -300,10 +296,11 @@ public class GameMap {
 
     //Method to mark the ship in the map
     private void markInMap(int size, String direction, int x, int y) {
-        // I'll not put case if size is one, because in all the cases we'll mark the chosen
-        //    place, so to avoid repeating this line e the 3 cases, I'll put here and avoid
-        //    to put the case 1
-
+        /* 
+          I'll not put case if size is one, because in all the cases we'll mark the chosen
+            place, so to avoid repeating this line e the 3 cases, I'll put here and avoid
+            to put the case 1 
+        */
         /*
             I don't know why, if is [row][col] if I want to run into X axis, I should incrise or
               decrease the COL section but when I'm doing it, it's walking through Y axis. I
@@ -376,9 +373,6 @@ public class GameMap {
                 else if (Objects.equals(direction, "H")) {
                     if (y + 1 >= BOARDLENGTH){
                         if (Objects.equals(battleMap[y - 2][x], " ")) {
-                            // we first will check if the ship's length will fit, that's why we'll
-                            // be doing x-2 before x-1. we already made this checkup, but we're
-                            // being purposefully redundant for security
                             battleMap[y - 2][x] = "X";
 
                             if (Objects.equals(battleMap[y - 1][x], " "))
@@ -411,6 +405,7 @@ public class GameMap {
     }
 
 
+    //Method to allocate the ships in the early game
     public void allocateShip(Scanner keyboard, Random random) {
         boolean confirmDirection, confirmPlace, confirmIfFit,
                 confirmChange;
@@ -454,13 +449,12 @@ public class GameMap {
 
                 do {
                     /*
-                            RECIVE ORDERED PAIR LOGIC:
-                            - recive the ordered pair in a String type;
-                            - split every char of the string into some array;
-                            - pic each value of this array and convert to a int type
-                            - and these 2 new ints and assign to X and Y variables to be in the
-                            [][]of the map
-                         */
+                        RECIVE ORDERED PAIR LOGIC:
+                        - recive the ordered pair in a String type;
+                        - split every char of the string into some array;
+                        - pic each value of this array and convert to a int type
+                        - and these 2 new ints and assign to X and Y variables to be in the [][]of the map
+                    */
 
                     confirmPlace = true;
 
@@ -588,11 +582,12 @@ public class GameMap {
                             } while (confirmChange);
                         }
                         else {
-                            /* //IN CASE OF TEST, TO SEE THE PC COORDINATE, UNWRAP THIS
-                            System.out.println("\nPc alocation test:");
-                            System.out.printf("shipChoice: %d\nShipDirection: %s\nX: %d\nY: " +
-                                            "%d\n\n",
-                                    shipChoice, shipDirection, y, x);
+                            /* 
+                                //IN CASE OF TEST, TO SEE THE PC COORDINATE, UNWRAP THIS
+                            
+                                System.out.println("\nPc alocation test:");
+                                System.out.printf("shipChoice: %d\nShipDirection: %s\nX: %d\nY: " +
+                                            "%d\n\n", shipChoice, shipDirection, y, x);
                             */
                             markInMap(shipHold[shipChoice], shipDirection, x, y);
                             confirmDirection = false;
@@ -638,8 +633,12 @@ public class GameMap {
 
             //picking the coordinate of the attack:
             if (Objects.equals(whosMap, "USER")) {
-//                System.out.println("PC map TEST:");   // TEST ! ! !
-//                showMap(otherPlayer.battleMap);
+                /*
+                    THIS IS A TEST TO SEE THE PC MAP JUST TO PASS THROUGH A TEST FASTER:
+
+                    System.out.println("PC map TEST:");   
+                    showMap(otherPlayer.battleMap); 
+                */
                 do {
                     System.out.println("\n\n\n\nPlayer's move: \nThis is your currently view of " +
                             "the Opponent's map:");
@@ -705,8 +704,6 @@ public class GameMap {
                             x = (aux3 * 10) + aux4;
                             break;
                     }
-
-                    //System.out.printf("AXIS TEST\nX: %d\nY: %d", x, y);
 
                     if (x > 0) {
                         if (x < BOARDLENGTH)
@@ -800,8 +797,7 @@ public class GameMap {
                 System.out.println("This place is not suitable to shoot!");
                 break;
 
-            // I'll not put case 4 and 5 because I already avoid those cases in the part where
-            // player choose where to hit
+            // I'll not put case 4 and 5 because I already avoid those cases in the part where player choose where to hit
         }
     }
 

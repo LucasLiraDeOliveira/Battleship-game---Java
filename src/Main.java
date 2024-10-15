@@ -101,11 +101,7 @@ public class Main {
 
 
 
-//        obj2.setWhosMap("USER");
-//        System.out.println("\n\nObj2 battle map:");
-//        obj2.showMap(obj2.battleMap);
-//        System.out.println("\nObj1 battle map:");
-//        obj1.showMap(obj1.battleMap);
+
         // Loop for the gameplay:
         do {
             obj1.playerTurn(obj2, keyboard, random);
