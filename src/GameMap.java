@@ -484,24 +484,31 @@ public class GameMap {
                                 // or Y coordinate:
                                 if (Objects.equals(coordinate[1], "1")) {
                                     if (Objects.equals(coordinate[0], "1")) {
-                                        if (Objects.equals(coordinate[2], "1")) {
-                                            System.out.println("Do you press it (11, 1) or (1, 11)? " +
-                                                    "\nIf it is the first option press F \nIf it is " +
-                                                    "the second option press S");
-                                            verification111 = (keyboard.next()).toUpperCase();
-                                            if (verification111.equals("F")) {
-                                                // remembering that we have to attribute the value
-                                                // that was supposed to be for X in Y and vice-versa
-                                                y = (aux1 * 10) + aux2; //this value was supposed to be
-                                                // for X
-                                                x = aux3; //this value was supposed to be for Y
+                                        //The next IF is in case we want to change teh size of the CONST BOARDLENGTH to not unnecessary ask the case of 111 coordinate
+                                        if(BOARDLENGTH >= 12){
+                                            if (Objects.equals(coordinate[2], "1")) {
+                                                System.out.println("Do you press it (11, 1) or (1, 11)? " +
+                                                        "\nIf it is the first option press F \nIf it is " +
+                                                        "the second option press S");
+                                                verification111 = (keyboard.next()).toUpperCase();
+                                                if (verification111.equals("F")) {
+                                                    // remembering that we have to attribute the value
+                                                    // that was supposed to be for X in Y and vice-versa
+                                                    y = (aux1 * 10) + aux2; //this value was supposed to be
+                                                    // for X
+                                                    x = aux3; //this value was supposed to be for Y
+                                                }
+                                                else if (verification111.equals("S")) {
+                                                    x = (aux1 * 10) + aux2;
+                                                    y = aux3;
+                                                }
                                             }
-                                            else if (verification111.equals("S")) {
-                                                x = (aux1 * 10) + aux2;
-                                                y = aux3;
+                                            else {
+                                                x = (aux2 * 10) + aux3;
+                                                y = aux1;
                                             }
                                         }
-                                        else if (Objects.equals(coordinate[2], "0")) {
+                                        else{
                                             x = (aux2 * 10) + aux3;
                                             y = aux1;
                                         }
