@@ -10,6 +10,7 @@ public class GameMap {
     private String assistanceMode;
     protected int[] shipHold;
     private int i, j;
+    private boolean xStatus, yStatus;
 
     //now will be variables exclusive if this obj will be conducted by the pc:
     int auxIndex;
@@ -469,80 +470,88 @@ public class GameMap {
                     confirmPlace = true;
 
                     if (Objects.equals(whosMap, "USER")) {
-                        System.out.println("Where do you want to place the ship? \nPlease put the" +
-                                " Ordered Pair way (e.g. 11 or 36 or 92)");
-                        shipLocation = keyboard.next();
+                        do {
+                            System.out.println("Where do you want to place the ship? \nPlease put the" +
+                                    " Ordered Pair way (e.g. 11 or 36 or 92)");
+                            shipLocation = keyboard.next();
 
 
-                        // array to receive each char of the string and attribute to os space of it
-                        coordinate = shipLocation.split(""); //if I don't put any parameter it
-                        // will separate in every char
+                            // array to receive each char of the string and attribute to os space of it
+                            coordinate = shipLocation.split(""); //if I don't put any parameter it
+                            // will separate in every char
 
-                        //We have to verify if the Ordered Pair is composed of 2, 3 or 4 numbers, so
-                        // we'll put a switch case to cover all up:
-                        switch (shipLocation.length()) {
-                            case 2:
-                                x = Integer.parseInt(coordinate[1]);
-                                y = Integer.parseInt(coordinate[0]);
-                                break;
-                            case 3:
-                                aux1 = Integer.parseInt(coordinate[0]);
-                                aux2 = Integer.parseInt(coordinate[1]);
-                                aux3 = Integer.parseInt(coordinate[2]);
+                            //We have to verify if the Ordered Pair is composed of 2, 3 or 4 numbers, so
+                            // we'll put a switch case to cover all up:
+                            switch (shipLocation.length()) {
+                                case 2:
+                                    x = Integer.parseInt(coordinate[1]);
+                                    y = Integer.parseInt(coordinate[0]);
+                                    break;
+                                case 3:
+                                    aux1 = Integer.parseInt(coordinate[0]);
+                                    aux2 = Integer.parseInt(coordinate[1]);
+                                    aux3 = Integer.parseInt(coordinate[2]);
 
-                                //Conditionals to se if this 1 in the middle is part of X coordinate
-                                // or Y coordinate:
-                                if (Objects.equals(coordinate[1], "1")) {
-                                    if (Objects.equals(coordinate[0], "1")) {
-                                        //The next IF is in case we want to change teh size of the CONST BOARDLENGTH to not unnecessary ask the case of 111 coordinate
-                                        if(BOARDLENGTH >= 12){
-                                            if (Objects.equals(coordinate[2], "1")) {
-                                                System.out.println("Do you press it (11, 1) or (1, 11)? " +
-                                                        "\nIf it is the first option press F \nIf it is " +
-                                                        "the second option press S");
-                                                verification111 = (keyboard.next()).toUpperCase();
-                                                if (verification111.equals("F")) {
-                                                    // remembering that we have to attribute the value
-                                                    // that was supposed to be for X in Y and vice-versa
-                                                    y = (aux1 * 10) + aux2; //this value was supposed to be
-                                                    // for X
-                                                    x = aux3; //this value was supposed to be for Y
-                                                }
-                                                else if (verification111.equals("S")) {
-                                                    x = (aux1 * 10) + aux2;
-                                                    y = aux3;
-                                                }
+                                    if(BOARDLENGTH >= 12){
+                                        if (aux3 > 0) {
+                                            //Conditionals to se if the coordinate is (NN, N) or (N, NN)
+                                            System.out.printf("\nDo you press it (%d%d, %d) or (%d, %d%d)? \nIf it is the first option press F \nIf it is the second option press S\n", aux1, aux2, aux3, aux1, aux2, aux3);
+                                            verification111 = (keyboard.next()).toUpperCase();
+                                            if (verification111.equals("F")) {
+                                                // remembering that we have to attribute the value
+                                                // that was supposed to be for X in Y and vice-versa
+                                                y = (aux1 * 10) + aux2; //this value was supposed to be
+                                                // for X
+                                                x = aux3; //this value was supposed to be for Y
                                             }
-                                            else {
-                                                x = (aux2 * 10) + aux3;
+                                            else if (verification111.equals("S")) {
                                                 y = aux1;
+                                                x = (aux2 * 10) + aux3;
                                             }
                                         }
-                                        else{
-                                            x = (aux2 * 10) + aux3;
+                                        else { // the only case will be (1, 10)
                                             y = aux1;
+                                            x = (aux2 * 10) + aux3;
                                         }
                                     }
-                                    else {
-                                        x = (aux2 * 10) + aux3;
+                                    else { // the only case will be (1, 10)
                                         y = aux1;
+                                        x = (aux2 * 10) + aux3;
                                     }
-                                }
-                                else {
-                                    y = (aux1 * 10) + aux2;
-                                    x = aux3;
-                                }
-                                break;
-                            case 4:
-                                aux1 = Integer.parseInt(coordinate[0]);
-                                aux2 = Integer.parseInt(coordinate[1]);
-                                aux3 = Integer.parseInt(coordinate[2]);
-                                aux4 = Integer.parseInt(coordinate[3]);
+                                    break;
+                                case 4:
+                                    aux1 = Integer.parseInt(coordinate[0]);
+                                    aux2 = Integer.parseInt(coordinate[1]);
+                                    aux3 = Integer.parseInt(coordinate[2]);
+                                    aux4 = Integer.parseInt(coordinate[3]);
 
-                                y = (aux1 * 10) + aux2;
-                                x = (aux3 * 10) + aux4;
-                                break;
-                        }
+                                    y = (aux1 * 10) + aux2;
+                                    x = (aux3 * 10) + aux4;
+                                    break;
+                            }
+
+                            if (x > 0) {
+                                if (x < BOARDLENGTH)
+                                    xStatus = true;
+                                else{
+                                    System.out.printf("The value of Y axis (%d) is out of bounds!\n\n", x);
+                                    xStatus = false;
+                                }
+                            }
+                            else
+                            xStatus = false;
+                            
+                            if (y > 0) {
+                                if (y < BOARDLENGTH)
+                                yStatus = true;
+                                else{
+                                    System.out.printf("The value of X axis (%d) is out of bounds!\n\n", y);
+                                    yStatus = false;
+                                }
+                            }
+                            else
+                                yStatus = false;
+                        } while (!xStatus || !yStatus);
                     }
                     else {
                         do {
@@ -566,9 +575,7 @@ public class GameMap {
                                 wannaChange = (keyboard.next()).toUpperCase();
 
                                 if (wannaChange.equals("Y")) {
-                                    System.out.println("Choose what you want to change: \n(1) The " +
-                                            "location of the ship \n(2) The DIRECTION of the ship \n" +
-                                            "(3) The type of ship");
+                                    System.out.println("Choose what you want to change: \n(1) The location of the ship \n(2) The DIRECTION of the ship \n(3) The type of ship");
                                     changeChoice = keyboard.nextInt();
                                     switch (changeChoice) {
                                         case 1:
@@ -643,7 +650,7 @@ public class GameMap {
 
     // Now the methods created during the development of the Gampley part:
     public void playerTurn(GameMap otherPlayer, Scanner keyboard, Random random){
-        boolean confirmPlace, confirmChange, xStatus, yStatus;
+        boolean confirmPlace, confirmChange;
         String shipLocation2, verification111, wannaChange;
         String[] coordinate;
         int x = 0, y = 0, aux1, aux2, aux3, aux4;
@@ -678,41 +685,36 @@ public class GameMap {
                             x = Integer.parseInt(coordinate[1]);
                             y = Integer.parseInt(coordinate[0]);
                             break;
-                        case 3:
+                            case 3:
                             aux1 = Integer.parseInt(coordinate[0]);
                             aux2 = Integer.parseInt(coordinate[1]);
                             aux3 = Integer.parseInt(coordinate[2]);
 
-                            //Conditionals to se if this 1 in the middle is part of X coordinate
-                            // or Y coordinate:
-                            if (Objects.equals(coordinate[1], "1")) {
-                                if (Objects.equals(coordinate[0], "1")) {
-                                    if (Objects.equals(coordinate[2], "1")) {
-                                        System.out.println("Do you press it (11, 1) or (1, 11)? " +
-                                                "\nIf it is the first option press F \nIf it is " +
-                                                "the second option press S");
-                                        verification111 = (keyboard.next()).toUpperCase();
-                                        if (verification111.equals("F")) {
-                                            // remembering that we have to attribute the value
-                                            // that was supposed to be for X in Y and vice-versa
-                                            y = (aux1 * 10) + aux2; //this value was supposed to be
-                                            // for X
-                                            x = aux3; //this value was supposed to be for Y
-                                        } else if (verification111.equals("S")) {
-                                            x = (aux1 * 10) + aux2;
-                                            y = aux3;
-                                        }
-                                    } else if (Objects.equals(coordinate[2], "0")) {
-                                        x = (aux2 * 10) + aux3;
-                                        y = aux1;
+                            if(BOARDLENGTH >= 12){
+                                if (aux3 > 0) {
+                                    //Conditionals to se if the coordinate is (NN, N) or (N, NN)
+                                    System.out.printf("\nDo you press it (%d%d, %d) or (%d, %d%d)? \nIf it is the first option press F \nIf it is the second option press S\n", aux1, aux2, aux3, aux1, aux2, aux3);
+                                    verification111 = (keyboard.next()).toUpperCase();
+                                    if (verification111.equals("F")) {
+                                        // remembering that we have to attribute the value
+                                        // that was supposed to be for X in Y and vice-versa
+                                        y = (aux1 * 10) + aux2; //this value was supposed to be
+                                        // for X
+                                        x = aux3; //this value was supposed to be for Y
                                     }
-                                } else {
-                                    x = (aux2 * 10) + aux3;
-                                    y = aux1;
+                                    else if (verification111.equals("S")) {
+                                        y = aux1;
+                                        x = (aux2 * 10) + aux3;
+                                    }
                                 }
-                            } else {
-                                y = (aux1 * 10) + aux2;
-                                x = aux3;
+                                else { // the only case will be (1, 10)
+                                    y = aux1;
+                                    x = (aux2 * 10) + aux3;
+                                }
+                            }
+                            else { // the only case will be (1, 10)
+                                y = aux1;
+                                x = (aux2 * 10) + aux3;
                             }
                             break;
                         case 4:
@@ -729,17 +731,21 @@ public class GameMap {
                     if (x > 0) {
                         if (x < BOARDLENGTH)
                             xStatus = true;
-                        else
+                        else{
+                            System.out.printf("\nThe value of Y axis (%d) is out of bounds!\n", x);
                             xStatus = false;
+                        }
                     }
                     else
-                        xStatus = false;
-
+                    xStatus = false;
+                    
                     if (y > 0) {
                         if (y < BOARDLENGTH)
-                            yStatus = true;
-                        else
+                        yStatus = true;
+                        else{
+                            System.out.printf("\nThe value of X axis (%d) is out of bounds!\n", y);
                             yStatus = false;
+                        }
                     }
                     else
                         yStatus = false;
