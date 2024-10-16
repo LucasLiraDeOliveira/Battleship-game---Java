@@ -639,9 +639,16 @@ public class GameMap {
     public void showMap(String[][] currentMap) {
         for (j = 0; j < BOARDLENGTH; j++) {
             for (i = 0; i < BOARDLENGTH; i++){
-                System.out.printf(currentMap[i][j] + "  ");
+                if (j > 0) {
+                    if (i > 9)
+                        System.out.printf(currentMap[i][j] + "   ");
+                    else
+                        System.out.printf(currentMap[i][j] + "  ");
                 }
-            System.out.println(" ");
+                else
+                    System.out.printf(currentMap[i][j] + "  ");
+            }
+            System.out.println("");
         }
     }
 
