@@ -629,10 +629,6 @@ public class GameMap {
         }
 
         System.out.println("All ships ready to battle!");
-
-
-        System.out.println("\n\nTEST!!!");
-        showMap(battleMap);
     }
 
 
