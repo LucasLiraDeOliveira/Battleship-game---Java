@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameMap {
-    private final int BOARDLENGTH = 11;
+    private int BOARDLENGTH;
     protected String[][] battleMap = new String[BOARDLENGTH][BOARDLENGTH];
     protected String[][] opponentMap = new String[BOARDLENGTH][BOARDLENGTH];
     private String whosMap; //to se if is a player or a pc map
@@ -15,8 +15,13 @@ public class GameMap {
     int auxIndex;
 
     // Contructor to generate the object's map right after create the GameMap obj
-    public GameMap() {
-        setWhosMap(whosMap);
+    public GameMap(int boardSize) {
+        //Receiving the length of the board and attributing the value in the matrix of the maps
+        BOARDLENGTH = boardSize;
+        battleMap = new String[BOARDLENGTH][BOARDLENGTH];
+        opponentMap = new String[BOARDLENGTH][BOARDLENGTH];
+
+        //setWhosMap(whosMap);  TEST!!
         //filling the coordinates of the battleMap
         for (j = 0; j < BOARDLENGTH; j++) {
             for (i = 0; i < BOARDLENGTH; i++) {
@@ -63,8 +68,13 @@ public class GameMap {
             }
         }
 
+
+
         //Now "putting" the ships in the shipStore
-        shipHold = new int[]{3, 2, 2, 1, 1, 1};
+        if (Objects.equals(BOARDLENGTH, 9))
+            shipHold = new int[]{3, 2, 2, 1, 1};
+        else if (Objects.equals(BOARDLENGTH, 13))
+            shipHold = new int[]{3, 3, 2, 2, 2, 1, 1};
     }
 
 
@@ -612,6 +622,10 @@ public class GameMap {
         }
 
         System.out.println("All ships ready to battle!");
+
+
+        System.out.println("\n\nTEST!!!");
+        showMap(battleMap);
     }
 
 
